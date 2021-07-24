@@ -87,15 +87,13 @@ var upperCasedCharacters = [
   'Y',
   'Z'
 ];
-var o = {s:specialCharacters, n:numericCharacters, l:lowerCasedCharacters, u:upperCasedCharacters};
-// specialCharacters | numericCharacters | lowerCasedCharacters | upperCasedCharacters
-console.log(Math.random());
+
 // Function to prompt user for password options
 function getPasswordOptions(){
   var length = 
-    prompt("Choose a character length between 10 - 64 for your password");
+    prompt("Choose a password length between 10 - 64 characters.");
 
-    if (length < 10 || length > 64){
+    if (length < 10 || length > 64 || isNaN(length)){
       alert('Please try again. You must pick a number between 10 - 64.');
       return; //if true; function stops or ends with the above alert
     }
@@ -117,17 +115,19 @@ function getPasswordOptions(){
 
     return passwordOptions;
 }
+// Function for getting a random element from an array, 'a'
+function getRandom(a) {
+  var index = Math.floor(Math.random() * a.length);
+  var element = a[index];
 
-
-// Function for getting a random element from an array
-function getRandom(arr) {
-
+  return element;
 }
+
 var o = {
-  s: specialCharacters, 
-  n: numericCharacters, 
-  l: lowerCasedCharacters, 
-  u: upperCasedCharacters
+  s: specialCharacters, //line 2
+  n: numericCharacters, //line 29
+  l: lowerCasedCharacters, //line 32
+  u: upperCasedCharacters //line 62
 };
 // Function to generate password with user input
 function generatePassword() {
