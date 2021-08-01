@@ -91,7 +91,7 @@ var upperCasedCharacters = [
 // Function to prompt user for password options
 function getPasswordOptions(){
   var length = 
-    prompt("Choose a password length between 10 - 64 characters.");
+    parseInt(prompt("Choose a password length between 10 - 64 characters."));
 
     if (length < 10 || length > 64 || isNaN(length)){
       alert('Please try again. You must pick a number between 10 - 64.');
@@ -112,47 +112,58 @@ function getPasswordOptions(){
       lowerCase: lowerCase,
       upperCase: upperCase 
     };
+    //check console log to see the values stored base on user input
+    console.log(passwordOptions);
+    return passwordOptions; // returns the value of user input within an object array
 
-    return passwordOptions;
 }
 // Function for getting a random element from an array, 'a'
 function getRandom(a) {
   var index = Math.floor(Math.random() * a.length);
-  var element = a[index];
-
-  return element;
+  return a[index];
 }
 
-var o = {
+function generatePassword() {
+  // calling getPasswordOptions() to retrieve the value of user input
+  var options = getPasswordOptions(); //'var options' is equivalent to line 117
+
+  // add Array [] to store random generated characters
+  var result = [];
+  var confirmedCharacterType = [];
+  var mustInclude = []; //this is to ensure that at least one of each character type that user confirms WILL be included
+
+  //Adding an object of 4 diff arrays (for testing purposes)
+  var o = {
   s: specialCharacters, //line 2
   n: numericCharacters, //line 29
   l: lowerCasedCharacters, //line 32
   u: upperCasedCharacters //line 62
-};
-// Function to generate password with user input
-function generatePassword() {
-  // call getPasswordOptions and store password to variable,'option'
-  var options = getPasswordOptions();
-
-  // add Array [] to store random generated characters
-  var result = [];
-  var randomCharacters = [];
-
+          };
   //use push() to add new items to the end of an array
-  if (options.special){ //if user confirms 'special characters'
-    randomCharacters.push(getRandom(o.s));
+  if (options.special){ 
+    confirmedCharacterType = confirmedCharacterType.concat(o.s);
+    mustInclude.push(getRandom(o.s));
   }
-  if (options.numbers){ //if user confirms 'numeric characters'
-    randomCharacters.push(getRandom(o.n));
+  if (options.numbers){ 
+    confirmedCharacterType = confirmedCharacterType.concat(o.n);
+    mustInclude.push(getRandom(o.n));
   }
-  if (options.lowerCase){ // if user confirms 'lowercase characters'
-    randomCharacters.push(getRandom(o.l));
+  if (options.lowerCase){ 
+    confirmedCharacterType= confirmedCharacterType.concat(o.l);
+    mustInclude.push(getRandom(o.l));
   }
-  if (options.upperCase){ // if user confirms 'uppercase characters'
-    randomCharacters.push(getRandom(o.u));
+  if (options.upperCase){ 
+    confirmedCharacterType = confirmedCharacterType.concat(o.u);
+    mustInclude.push(getRandom(o.u));
+  }
+ 
+  for (var i = 0; i < options.length; i++){
+    result.push(getRandom(confirmedCharacterType));
+  }
+  for (var i = 0; i <mustInclude.length; i++){
+    result[i] = mustInclude[i];
   }
   return result.join('');
-  //"The join() method creates and returns a new string by concatenating all of the elements in an array."
 }
 
 // Get references to the #generate element
